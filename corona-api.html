@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        .container {
+            display: flex;
+            max-width: 1290px;
+            margin: auto;
+            justify-content: center;
+        }
+
+        .table {
+            margin-left: 100px;
+            width: auto;
+        }
+
+        table {
+            width: 400px;
+            border-collapse: collapse;
+            /* margin-top: 50px; */
+        }
+
+        th,
+        td {
+            border: 2px solid #b3b1b1;
+            padding: 8px;
+            text-align: center;
+            width: 300px !;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        nav
+        .menu {
+            display: flex;
+            background-color: rgb(0, 0, 0);
+            justify-content: center;
+            height: 40px;
+            align-items: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+            text-transform: capitalize;
+        }
+
+        li {
+            list-style: none;
+            margin: 0 20px;
+        }
+
+        h3 {
+            color: #f2f2f2;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <h3>user page</h3>
+            <ul class="menu">
+                <li><a href="corona-api.html">user</a></li>
+                <li><a href="admin-api.html">admin</a></li>
+                <li><a href="faculty-api.html">faculty</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="table">
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Active Status</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <script>
+        $.ajax({
+            url: "http://3.110.148.203:3000/v1/user/list",
+            method: "GET",
+            success: (data) => {
+                const tableBody = document.getElementById("table-body");
+                data.data.map((val) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                    <td>${val._id}</td>
+                    <td>${val.first_name}</td>
+                    <td>${val.last_name}</td>
+                    <td>${val.is_active}</td>
+                    <td>${val.email}</td>
+                    <td>${val.password}</td>
+                `;
+                    tableBody.appendChild(row);
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>
